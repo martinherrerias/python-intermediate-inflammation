@@ -13,3 +13,11 @@ dependencies = [
 
 [tool.setuptools]
 packages = ["inflammation"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.10",
+]
+
+[tool.ruff]
+line-length = 88
