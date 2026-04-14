@@ -1,5 +1,8 @@
 # Introduction
 
+[![pytest](https://github.com/martinherrerias/python-intermediate-inflammation/actions/workflows/pytest.yml/badge.svg)](https://github.com/martinherrerias/python-intermediate-inflammation/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/martinherrerias/python-intermediate-inflammation/branch/main/graph/badge.svg)](https://codecov.io/gh/martinherrerias/python-intermediate-inflammation)
+
 This is a template software project repository used by the [Intermediate Research Software Development Skills In Python](https://github.com/carpentries-incubator/python-intermediate-development).
 
 ## Purpose
