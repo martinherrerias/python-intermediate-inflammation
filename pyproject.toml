@@ -16,8 +16,12 @@ packages = ["inflammation"]
 
 [dependency-groups]
 dev = [
+    "pytype>=2024.9.13",
     "ruff>=0.15.10",
 ]
 
 [tool.ruff]
 line-length = 88
+
+[tool.pytype]
+inputs = ['inflammation']
