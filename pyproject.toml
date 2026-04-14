@@ -16,6 +16,7 @@ packages = ["inflammation"]
 
 [dependency-groups]
 dev = [
+    "pytest>=8.4.2",
     "pytype>=2024.9.13",
     "ruff>=0.15.10",
 ]
