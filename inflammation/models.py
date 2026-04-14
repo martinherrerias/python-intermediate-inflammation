@@ -39,3 +39,9 @@ def daily_max(data: InflammationData) -> DailySummary:
 def daily_min(data: InflammationData) -> DailySummary:
     """Calculate the daily min of a 2D inflammation data array."""
     return np.min(data, axis=0)
+
+
+class Patient:
+    """TODO: implement Patient model."""
+
+    pass
