@@ -24,5 +24,14 @@ dev = [
 [tool.ruff]
 line-length = 88
 
+[tool.ruff.lint]
+select = ["D"]
+ignore = [
+    "D401",  # imperative mood
+    "D202",  # no blank lines after docstring
+]
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
 [tool.pytype]
 inputs = ['inflammation']
