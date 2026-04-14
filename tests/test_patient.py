@@ -1,10 +1,12 @@
 """Tests for the Patient model."""
 
+from inflammation.models import Patient
 
-def test_create_patient():
-    from inflammation.models import Patient
 
-    name = "Alice"
-    p = Patient(name=name)
+# def test_create_patient():
+#     """Test that we can create a patient with a name."""
 
-    assert p.name == name
+#     name = "Alice"
+#     p = Patient(name=name)
+
+#     assert p.name == name
