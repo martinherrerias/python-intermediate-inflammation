@@ -36,3 +36,7 @@ convention = "pep257"
 
 [tool.pytype]
 inputs = ['inflammation']
+
+[tool.pytest.ini_options]
+addopts = "--cov-report=term-missing --cov=inflammation"
+testpaths = ["tests"]

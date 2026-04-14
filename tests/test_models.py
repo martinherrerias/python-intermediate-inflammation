@@ -5,10 +5,22 @@ import numpy as np
 import numpy.testing as npt
 
 from inflammation.models import (
+    load_csv,
     daily_mean,
     daily_max,
     daily_min,
 )
+
+
+def test_load_csv(tmp_path):
+    """Test that we can load a CSV file as a Numpy array."""
+
+    csv_file = tmp_path / "foo.csv"
+    csv_file.write_text("1,2,3\n4,5,6")
+    data = load_csv(csv_file)
+
+    npt.assert_array_equal(data, np.array([[1, 2, 3], [4, 5, 6]]))
+
 
 @pytest.mark.parametrize(
     "input, expected",
