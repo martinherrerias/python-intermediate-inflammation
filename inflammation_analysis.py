@@ -2,7 +2,6 @@
 """Software for managing and analysing patients' inflammation data."""
 
 import argparse
-import os
 
 from inflammation import models, views
 from inflammation.compute_data import analyse_data
@@ -19,7 +18,7 @@ def main(input_files, full_data_analysis=False):
         input_files = [input_files]
 
     if full_data_analysis:
-        analyse_data(os.path.dirname(input_files[0]))
+        analyse_data(input_files)
         return
 
     for filename in input_files:
