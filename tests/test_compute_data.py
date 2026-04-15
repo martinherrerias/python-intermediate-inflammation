@@ -1,10 +1,11 @@
 """Tests for compute_data."""
 
 import pytest
+from unittest.mock import Mock, patch
 import numpy as np
 import numpy.testing as npt
 
-from inflammation.compute_data import CSVDataSource
+from inflammation.compute_data import CSVDataSource, analyse_data
 
 
 def test_csv_data_constructor(tmp_path):
@@ -55,3 +56,20 @@ def test_load_inflammation_data(file_sizes, expected_error, tmp_path):
     else:
         with pytest.raises(expected_error[0], match=expected_error[1]):
             imported = list(data_source.load_inflammation_data())
+
+
+@patch("inflammation.views.visualize")
+def test_analyse_data(mock_view):
+    """Test that we can analyse data from a CSVDataSource."""
+
+    data_source = Mock()
+    mock_data = iter([np.array([[1, 2], [3, 4]]), np.array([[5, 6], [7, 8]])])
+    data_source.load_inflammation_data.return_value = mock_data
+
+    analyse_data(data_source)
+
+    mock_view.assert_called_once()
+    graph_data = mock_view.call_args.args[0]
+    npt.assert_array_equal(
+        graph_data["standard deviation by day"], np.array([2.0, 2.0])
+    )
