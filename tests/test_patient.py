@@ -3,6 +3,7 @@
 import pytest
 from inflammation.models import Patient
 
+# pylint: disable-all
 @pytest.mark.skip(reason="Patient model not implemented yet")
 def test_create_patient():
     """Test that we can create a patient with a name."""

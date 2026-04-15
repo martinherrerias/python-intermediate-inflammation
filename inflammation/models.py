@@ -55,15 +55,17 @@ def patient_normalise(data):
 
     NaN values are ignored, and normalised to 0.
     """
-    max = np.nanmax(data, axis=1)
+    data_max = np.nanmax(data, axis=1)
     with np.errstate(invalid="ignore", divide="ignore"):
-        normalised = data / max[:, np.newaxis]
+        normalised = data / data_max[:, np.newaxis]
     normalised[np.isnan(normalised)] = 0
 
     return normalised
 
-
+# pylint: disable=too-few-public-methods
 class Patient:
     """TODO: implement Patient model."""
 
-    pass
+    def __init__(self, args, kwargs):
+        """TODO: implement Patient model."""
+        raise NotImplementedError("Patient model not implemented yet")

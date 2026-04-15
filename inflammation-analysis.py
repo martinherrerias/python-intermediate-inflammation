@@ -1,23 +1,22 @@
 #!/usr/bin/env python3
-"""Software for managing and analysing patients' inflammation data in our imaginary hospital."""
+"""Software for managing and analysing patients' inflammation data."""
 
 import argparse
 
 from inflammation import models, views
 
 
-def main(args):
+def main(input_files):
     """The MVC Controller of the patient inflammation data system.
 
     The Controller is responsible for:
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
-    InFiles = args.infiles
-    if not isinstance(InFiles, list):
-        InFiles = [args.infiles]
+    if not isinstance(input_files, list):
+        input_files = [input_files]
 
-    for filename in InFiles:
+    for filename in input_files:
         inflammation_data = models.load_csv(filename)
 
         view_data = {
@@ -42,4 +41,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(args)
+    main(args.infiles)
