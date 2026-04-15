@@ -2,11 +2,13 @@
 """Software for managing and analysing patients' inflammation data."""
 
 import argparse
+import os
 
 from inflammation import models, views
+from inflammation.compute_data import analyse_data
 
 
-def main(input_files):
+def main(input_files, full_data_analysis=False):
     """The MVC Controller of the patient inflammation data system.
 
     The Controller is responsible for:
@@ -15,6 +17,10 @@ def main(input_files):
     """
     if not isinstance(input_files, list):
         input_files = [input_files]
+
+    if full_data_analysis:
+        analyse_data(os.path.dirname(input_files[0]))
+        return
 
     for filename in input_files:
         inflammation_data = models.load_csv(filename)
@@ -39,6 +45,10 @@ if __name__ == "__main__":
         help="Input CSV(s) containing inflammation series for each patient",
     )
 
+    parser.add_argument(
+        "--full-data-analysis", action="store_true", dest="full_data_analysis"
+    )
+
     args = parser.parse_args()
 
-    main(args.infiles)
+    main(args.infiles, args.full_data_analysis)
