@@ -1,5 +1,6 @@
 """Module containing mechanism for calculating standard deviation between datasets."""
 
+import os
 from collections.abc import Iterator
 import numpy as np
 
@@ -10,8 +11,16 @@ from inflammation.models import InflammationData
 class CSVDataSource:
     """Class to load inflammation data from a list of CSV files."""
 
-    def __init__(self, input_files: list):
+    def __init__(self, input_files):
         """Initialise the data source with a list of input files."""
+
+        if not isinstance(input_files, list):
+            input_files = [input_files]
+
+        for f in input_files:
+            if not os.path.isfile(f):
+                raise ValueError(f"Input file {f} does not exist")
+
         self.input_files: list[str] = input_files
 
     def load_inflammation_data(self) -> Iterator[InflammationData]:

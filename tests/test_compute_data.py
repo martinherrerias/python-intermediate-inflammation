@@ -7,6 +7,19 @@ import numpy.testing as npt
 from inflammation.compute_data import CSVDataSource
 
 
+def test_csv_data_constructor(tmp_path):
+    """Test CSVDataSource construction and error handling."""
+
+    files = [tmp_path / "foo.csv", tmp_path / "bar.csv"]
+    [f.touch() for f in files]
+
+    data_source = CSVDataSource(files)
+    assert data_source.input_files == files
+
+    with pytest.raises(ValueError, match="does not exist"):
+        CSVDataSource([files[0], "nonexistent.csv"])
+
+
 def _random_files(tmp_path, *args):
     """Generate files with random integer tables of the given sizes."""
 
