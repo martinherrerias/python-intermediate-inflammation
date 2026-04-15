@@ -46,7 +46,7 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
-        "--full-data-analysis", action="store_true", dest="full_data_analysis"
+        "-f", "--full-data-analysis", action="store_true", dest="full_data_analysis"
     )
 
     args = parser.parse_args()
