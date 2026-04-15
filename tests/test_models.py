@@ -13,14 +13,28 @@ from inflammation.models import (
 )
 
 
-def test_load_csv(tmp_path):
+@pytest.mark.parametrize(
+    "contents, expected",
+    [
+        pytest.param("1,2,3\n4,5,6", [[1, 2, 3], [4, 5, 6]], id="2x3 ints"),
+        pytest.param("0.1,0.2,3\n4,5,6", [[0.1, 0.2, 3], [4, 5, 6]], id="2x3 float"),
+        pytest.param("0,0,0", [[0, 0, 0]], id="zero row"),
+        pytest.param("-1,2\n3,4", (ValueError, "negative"), id="negative"),
+        pytest.param("", (ValueError, "empty"), id="empty"),
+    ],
+)
+def test_load_csv(contents, expected, tmp_path):
     """Test that we can load a CSV file as a Numpy array."""
 
     csv_file = tmp_path / "foo.csv"
-    csv_file.write_text("1,2,3\n4,5,6")
-    data = load_csv(csv_file)
+    csv_file.write_text(contents)
 
-    npt.assert_array_equal(data, np.array([[1, 2, 3], [4, 5, 6]]))
+    if isinstance(expected, tuple):
+        with pytest.raises(expected[0], match=expected[1]):
+            data = load_csv(csv_file)
+    else:
+        data = load_csv(csv_file)
+        npt.assert_array_equal(data, np.array(expected, ndmin=2))
 
 
 @pytest.mark.parametrize(
@@ -67,10 +81,11 @@ def test_daily_max(input, expected):
 @pytest.mark.parametrize(
     "test, expected",
     [
-        (
-            [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
-            [[0.33, 0.67, 1], [0.67, 0.83, 1], [0.78, 0.89, 1]],
-        )
+        pytest.param([[0, 0, 0], [0, 0, 0]], [[0, 0, 0], [0, 0, 0]], id="zeros"),
+        pytest.param([[1, 1, 1], [1, 1, 1]], [[1, 1, 1], [1, 1, 1]], id="ones"),
+        pytest.param(
+            [[1, 2, 3], [4, 5, 6]], [[0.33, 0.67, 1], [0.67, 0.83, 1]], id="ints"
+        ),
     ],
 )
 def test_patient_normalise(test, expected):

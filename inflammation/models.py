@@ -20,10 +20,18 @@ DailySummary: TypeAlias = np.ndarray[tuple[int], np.dtype[np.float64]]
 def load_csv(filename) -> InflammationData:
     """Load a Numpy array from a CSV.
 
+    Values should ne non negative
+
     :param filename: Filename of CSV to load
     :return: 2D array of inflammation data
     """
-    return np.loadtxt(fname=filename, delimiter=",")
+
+    data = np.loadtxt(fname=filename, delimiter=",", ndmin=2)
+    if np.any(data < 0):
+        raise ValueError("Inflammation values should not be negative")
+    if np.size(data) == 0:
+        raise ValueError("Inflammation data is empty")
+    return data
 
 
 def daily_mean(data: InflammationData) -> DailySummary:
@@ -41,10 +49,18 @@ def daily_min(data: InflammationData) -> DailySummary:
     return np.min(data, axis=0)
 
 
-def patient_normalise(data: InflammationData) -> InflammationData:
-    """Normalise patient data from a 2D inflammation data array."""
-    max = np.max(data, axis=1)
-    return data / max[:, np.newaxis]
+def patient_normalise(data):
+    """
+    Normalise patient data from a 2D inflammation data array.
+
+    NaN values are ignored, and normalised to 0.
+    """
+    max = np.nanmax(data, axis=1)
+    with np.errstate(invalid="ignore", divide="ignore"):
+        normalised = data / max[:, np.newaxis]
+    normalised[np.isnan(normalised)] = 0
+
+    return normalised
 
 
 class Patient:
