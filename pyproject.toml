@@ -19,6 +19,7 @@ packages = ["inflammation"]
 dev = [
     "pytest>=8.4.2",
     "pytype>=2024.9.13",
+    "pylint>=3.3.9",
     "ruff>=0.15.10",
 ]
 
@@ -26,7 +27,7 @@ dev = [
 line-length = 88
 
 [tool.ruff.lint]
-select = ["D"]
+select = ["E", "F", "W", "UP", "B", "SIM", "RUF", "D", "PL"]
 ignore = [
     "D401",  # imperative mood
     "D202",  # no blank lines after docstring
