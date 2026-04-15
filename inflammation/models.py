@@ -41,6 +41,12 @@ def daily_min(data: InflammationData) -> DailySummary:
     return np.min(data, axis=0)
 
 
+def patient_normalise(data: InflammationData) -> InflammationData:
+    """Normalise patient data from a 2D inflammation data array."""
+    max = np.max(data, axis=0)
+    return data / max[:, np.newaxis]
+
+
 class Patient:
     """TODO: implement Patient model."""
 
