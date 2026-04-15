@@ -4,7 +4,7 @@
 import argparse
 
 from inflammation import models, views
-from inflammation.compute_data import analyse_data
+from inflammation.compute_data import analyse_data, CSVDataSource
 
 
 def main(input_files, full_data_analysis=False):
@@ -18,7 +18,8 @@ def main(input_files, full_data_analysis=False):
         input_files = [input_files]
 
     if full_data_analysis:
-        analyse_data(input_files)
+        data_source = CSVDataSource(input_files)
+        analyse_data(data_source)
         return
 
     for filename in input_files:

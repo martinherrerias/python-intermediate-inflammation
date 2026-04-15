@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 import numpy.testing as npt
 
-from inflammation.compute_data import load_inflammation_data
+from inflammation.compute_data import CSVDataSource
 
 
 def _random_files(tmp_path, *args):
@@ -19,6 +19,7 @@ def _random_files(tmp_path, *args):
 
     return files, data
 
+
 @pytest.mark.parametrize(
     "file_sizes, expected_error",
     [
@@ -32,11 +33,12 @@ def test_load_inflammation_data(file_sizes, expected_error, tmp_path):
     """Test that we can load a CSV file as a Numpy array."""
 
     csv_files, contents = _random_files(tmp_path, *file_sizes)
+    data_source = CSVDataSource(csv_files)
 
     if expected_error is None:
-        imported = list(load_inflammation_data(csv_files))
+        imported = data_source.load_inflammation_data()
         for data, expected in zip(imported, contents):
             npt.assert_array_equal(data, expected)
     else:
         with pytest.raises(expected_error[0], match=expected_error[1]):
-            imported = list(load_inflammation_data(csv_files))
+            imported = list(data_source.load_inflammation_data())
