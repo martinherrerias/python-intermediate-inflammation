@@ -5,6 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "python-intermediate-inflammation"
 version = "0.1.0"
+description = "An example software project"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
 requires-python = ">=3.9"
 dependencies = [
     "matplotlib>=3.9.4",
@@ -12,8 +21,9 @@ dependencies = [
     "pytest-cov>=7.1.0",
 ]
 
-[tool.setuptools]
-packages = ["inflammation"]
+[project.urls]
+Repo = "https://github.com/martinherrerias/python-intermediate-inflammation"
+Course = "https://github.com/carpentries-incubator/python-intermediate-development"
 
 [dependency-groups]
 dev = [
