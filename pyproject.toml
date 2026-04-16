@@ -4,8 +4,41 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-intermediate-inflammation"
-version = "0.0.0"
+version = "0.1.0"
 requires-python = ">=3.9"
+dependencies = [
+    "matplotlib>=3.9.4",
+    "numpy>=2.0.2",
+    "pytest-cov>=7.1.0",
+]
 
 [tool.setuptools]
 packages = ["inflammation"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.2",
+    "pytype>=2024.9.13",
+    "pylint>=3.3.9",
+    "ruff>=0.15.10",
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "UP", "B", "SIM", "RUF", "D", "PL"]
+ignore = [
+    "D401",  # imperative mood
+    "D202",  # no blank lines after docstring
+]
+[tool.ruff.lint.pydocstyle]
+convention = "pep257"
+
+[tool.pytype]
+inputs = ['inflammation']
+
+[tool.pytest.ini_options]
+addopts = "--cov-report=term-missing --cov=inflammation --cov=inflammation_analysis"
+testpaths = ["tests"]
+pythonpath = ["."]

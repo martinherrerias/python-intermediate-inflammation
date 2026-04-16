@@ -1,10 +1,10 @@
 """Module containing code for plotting inflammation data."""
 
 from matplotlib import pyplot as plt
-import numpy as np
+from .models import DailySummary
 
 
-def visualize(data_dict):
+def visualize(data_dict: dict[str, DailySummary]) -> None:
     """Display plots of basic statistical properties of the inflammation data.
 
     :param data_dict: Dictionary of name -> data to plot
