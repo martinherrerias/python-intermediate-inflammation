@@ -18,6 +18,22 @@ Here are some key features of Inflam:
 - Generate plots of trial data
 - Analytical functions and views can be easily extended based on its Model-View-Controller architecture
 
+## Installation
+
+If you just want to run the tool, you can pull the latest version from _TestPyPi_ and let `uv` handle the dependencies:
+
+```sh
+uv tool install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ python-intermediate-inflammation-mha
+inflammation --help
+```
+
+If you want to use the package as a library, use something in the lines of:
+
+```sh
+pip install matplotlib numpy
+pip install -i https://test.pypi.org/simple/ python-intermediate-inflammation-mha
+```
+
 ## Prerequisites
 Inflam requires the following Python packages:
 
@@ -29,9 +45,12 @@ The following optional packages are required to run Inflam's unit tests:
 - [pytest](https://docs.pytest.org/en/stable/) - Inflam's unit tests are written using pytest
 - [pytest-cov](https://pypi.org/project/pytest-cov/) - Adds test coverage stats to unit testing
 
-# Development
+## Development
+
+The easiest way to set up a development environment is to use `uv`:
 
 ```sh
+# clone and cd into the repository, then:
 uv venv
 source venv/bin/activate
 uv sync
