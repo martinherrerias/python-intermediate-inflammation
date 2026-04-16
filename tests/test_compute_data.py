@@ -2,12 +2,17 @@
 
 import os
 from glob import glob
+import math
 import pytest
 from unittest.mock import Mock, patch
 import numpy as np
 import numpy.testing as npt
 
-from inflammation.compute_data import CSVDataSource, analyse_data
+from inflammation.compute_data import (
+    CSVDataSource,
+    analyse_data,
+    compute_standard_deviation_by_day,
+)
 
 
 def test_csv_data_constructor(tmp_path):
@@ -101,3 +106,23 @@ def test_analyse_data_regression():
     npt.assert_array_almost_equal(
         result["standard deviation by day"], _regression_output
     )
+
+
+@pytest.mark.parametrize(
+    "data,expected_output",
+    [
+        ([[[0, 1, 0], [0, 2, 0]]], [0, 0, 0]),
+        ([[[0, 2, 0]], [[0, 1, 0]]], [0, math.sqrt(0.25), 0]),
+        ([[[0, 1, 0], [0, 2, 0]], [[0, 1, 0], [0, 2, 0]]], [0, 0, 0]),
+    ],
+    ids=[
+        "Two patients in same file",
+        "Two patients in different files",
+        "Two identical patients in two different files",
+    ],
+)
+def test_compute_standard_deviation_by_day(data, expected_output):
+    """Test compute_standard_deviation_by_day with various data inputs."""
+
+    result = compute_standard_deviation_by_day(data)
+    npt.assert_array_almost_equal(result, expected_output)
