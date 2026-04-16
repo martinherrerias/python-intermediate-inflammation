@@ -32,7 +32,9 @@ def main(input_files, full_data_analysis=False):
         views.visualize(view_data)
 
 
-if __name__ == "__main__":
+def cli(argv=None):
+    """Parse command-line arguments and invoke the controller."""
+
     parser = argparse.ArgumentParser(
         description="A basic patient inflammation data management system"
     )
@@ -47,6 +49,10 @@ if __name__ == "__main__":
         "-f", "--full-data-analysis", action="store_true", dest="full_data_analysis"
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     main(args.infiles, args.full_data_analysis)
+
+
+if __name__ == "__main__":
+    cli()

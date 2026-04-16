@@ -33,7 +33,7 @@ jobs:
           python3 -m pylint --fail-under=0 --reports=y **/*.py
 
       - name: Run tests with coverage
-        run: pytest --cov=inflammation --cov-report=xml --cov-report=term-missing
+        run: pytest --cov-report=xml
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

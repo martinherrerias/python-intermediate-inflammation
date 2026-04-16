@@ -9,7 +9,7 @@ import inflammation_analysis
 
 @patch("inflammation.compute_data.CSVDataSource.load_inflammation_data")
 @patch("inflammation.views.visualize")
-def test_analyse_data(mock_view, mock_load_data):
+def test_inflammation_analysis(mock_view, mock_load_data):
     """Test that non-full analysis visualizes each dataset separately."""
 
     mock_load_data.return_value = iter(
@@ -39,3 +39,24 @@ def test_analyse_data(mock_view, mock_load_data):
         npt.assert_array_equal(call.args[0]["average"], expected_view_data["average"])
         npt.assert_array_equal(call.args[0]["max"], expected_view_data["max"])
         npt.assert_array_equal(call.args[0]["min"], expected_view_data["min"])
+
+
+@patch("inflammation_analysis.main")
+def test_cli_forwards_parsed_arguments(mock_main):
+    """Test that CLI parsing forwards argv values to main."""
+
+    with patch(
+        "sys.argv",
+        [
+            "inflammation_analysis.py",
+            "data/inflammation-01.csv",
+            "data/inflammation-02.csv",
+            "--full-data-analysis",
+        ],
+    ):
+        inflammation_analysis.cli()
+
+    mock_main.assert_called_once_with(
+        ["data/inflammation-01.csv", "data/inflammation-02.csv"],
+        True,
+    )
