@@ -1,6 +1,6 @@
 [project]
 name = "python-intermediate-inflammation-mha"
-version = "0.2.0"
+version = "0.2.1"
 description = "An example software project"
 readme = "README.md"
 classifiers = [
@@ -14,7 +14,6 @@ requires-python = ">=3.9"
 dependencies = [
     "matplotlib>=3.9.4",
     "numpy>=2.0.2",
-    "pytest-cov>=7.1.0",
 ]
 
 [project.urls]
@@ -24,6 +23,7 @@ Course = "https://github.com/carpentries-incubator/python-intermediate-developme
 [dependency-groups]
 dev = [
     "pytest>=8.4.2",
+    "pytest-cov>=7.1.0",
     "pytype>=2024.9.13",
     "pylint>=3.3.9",
     "ruff>=0.15.10",
