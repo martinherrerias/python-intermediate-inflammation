@@ -7,7 +7,7 @@ import numpy as np
 from inflammation import models, views
 from inflammation.models import InflammationData, DailySummary
 
-
+# pylint: disable=too-few-public-methods
 class CSVDataSource:
     """Class to load inflammation data from a list of CSV files."""
 
@@ -55,5 +55,6 @@ def analyse_data(data_source: CSVDataSource, visualize=True) -> None | dict:
     }
     if visualize:
         views.visualize(graph_data)
-    else:
-        return graph_data
+        return None
+
+    return graph_data
