@@ -1,6 +1,6 @@
 [project]
-name = "python-intermediate-inflammation"
-version = "0.1.0"
+name = "python-intermediate-inflammation-mha"
+version = "0.2.0"
 description = "An example software project"
 readme = "README.md"
 classifiers = [
@@ -59,3 +59,9 @@ module-root = ""
 
 [project.scripts]
 inflammation = "inflammation.controller:cli"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
