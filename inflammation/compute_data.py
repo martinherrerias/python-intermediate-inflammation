@@ -5,7 +5,7 @@ from collections.abc import Iterator
 import numpy as np
 
 from inflammation import models, views
-from inflammation.models import InflammationData
+from inflammation.models import InflammationData, DailySummary
 
 
 class CSVDataSource:
@@ -31,6 +31,15 @@ class CSVDataSource:
         yield from map(models.load_csv, self.input_files)
 
 
+def compute_standard_deviation_by_day(data: Iterator[InflammationData]) -> DailySummary:
+    """Calculate the standard deviation by day between datasets."""
+
+    means_by_day = map(models.daily_mean, data)
+    means_by_day_matrix = np.stack(list(means_by_day))
+    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
+    return daily_standard_deviation
+
+
 def analyse_data(data_source: CSVDataSource, visualize=True) -> None | dict:
     """Calculates the standard deviation by day between datasets.
 
@@ -39,14 +48,10 @@ def analyse_data(data_source: CSVDataSource, visualize=True) -> None | dict:
     then plots the graphs of standard deviation of these means.
     """
     data = data_source.load_inflammation_data()
-
-    means_by_day = map(models.daily_mean, data)
-    means_by_day_matrix = np.stack(list(means_by_day))
-
-    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
+    std = compute_standard_deviation_by_day(data)
 
     graph_data = {
-        "standard deviation by day": daily_standard_deviation,
+        "standard deviation by day": std,
     }
     if visualize:
         views.visualize(graph_data)
