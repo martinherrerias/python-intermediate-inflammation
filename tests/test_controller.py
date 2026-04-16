@@ -4,21 +4,20 @@ from unittest.mock import patch
 import numpy as np
 from numpy import testing as npt
 
-import inflammation_analysis
+from inflammation import controller
 
 
 @patch("inflammation.compute_data.CSVDataSource.load_inflammation_data")
 @patch("inflammation.views.visualize")
-def test_inflammation_analysis(mock_view, mock_load_data):
+def test_controller(mock_view, mock_load_data):
     """Test that non-full analysis visualizes each dataset separately."""
 
-    mock_load_data.return_value = iter(
-        [np.array([[1, 2], [3, 4]]), np.array([[5, 6], [7, 8]])]
-    )
+    data = [np.array([[1, 2], [3, 4]]), np.array([[5, 6], [7, 8]])]
+    mock_load_data.return_value = iter(data)
 
-    inflammation_analysis.main([], full_data_analysis=False)
+    controller.main([], full_data_analysis=False)
 
-    assert mock_view.call_count == 2
+    assert mock_view.call_count == len(data)
 
     expected = [
         {
@@ -41,20 +40,20 @@ def test_inflammation_analysis(mock_view, mock_load_data):
         npt.assert_array_equal(call.args[0]["min"], expected_view_data["min"])
 
 
-@patch("inflammation_analysis.main")
+@patch("inflammation.controller.main")
 def test_cli_forwards_parsed_arguments(mock_main):
     """Test that CLI parsing forwards argv values to main."""
 
     with patch(
         "sys.argv",
         [
-            "inflammation_analysis.py",
+            "controller.py",
             "data/inflammation-01.csv",
             "data/inflammation-02.csv",
             "--full-data-analysis",
         ],
     ):
-        inflammation_analysis.cli()
+        controller.cli()
 
     mock_main.assert_called_once_with(
         ["data/inflammation-01.csv", "data/inflammation-02.csv"],

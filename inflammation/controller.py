@@ -52,7 +52,3 @@ def cli(argv=None):
     args = parser.parse_args(argv)
 
     main(args.infiles, args.full_data_analysis)
-
-
-if __name__ == "__main__":
-    cli()

@@ -39,6 +39,9 @@ convention = "pep257"
 inputs = ['inflammation']
 
 [tool.pytest.ini_options]
-addopts = "--cov-report=term-missing --cov=inflammation --cov=inflammation_analysis"
+addopts = "--cov-report=term-missing --cov=inflammation"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[project.scripts]
+inflammation = "inflammation.controller:cli"
