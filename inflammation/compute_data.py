@@ -31,7 +31,7 @@ class CSVDataSource:
         yield from map(models.load_csv, self.input_files)
 
 
-def analyse_data(data_source: CSVDataSource):
+def analyse_data(data_source: CSVDataSource, visualize=True) -> None | dict:
     """Calculates the standard deviation by day between datasets.
 
     Gets all the inflammation data from CSV files within a directory,
@@ -48,4 +48,7 @@ def analyse_data(data_source: CSVDataSource):
     graph_data = {
         "standard deviation by day": daily_standard_deviation,
     }
-    views.visualize(graph_data)
+    if visualize:
+        views.visualize(graph_data)
+    else:
+        return graph_data
