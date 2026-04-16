@@ -1,10 +1,15 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "python-intermediate-inflammation"
-version = "0.1.0"
+name = "python-intermediate-inflammation-mha"
+version = "0.2.0"
+description = "An example software project"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
 requires-python = ">=3.9"
 dependencies = [
     "matplotlib>=3.9.4",
@@ -12,8 +17,9 @@ dependencies = [
     "pytest-cov>=7.1.0",
 ]
 
-[tool.setuptools]
-packages = ["inflammation"]
+[project.urls]
+Repo = "https://github.com/martinherrerias/python-intermediate-inflammation"
+Course = "https://github.com/carpentries-incubator/python-intermediate-development"
 
 [dependency-groups]
 dev = [
@@ -39,6 +45,23 @@ convention = "pep257"
 inputs = ['inflammation']
 
 [tool.pytest.ini_options]
-addopts = "--cov-report=term-missing --cov=inflammation --cov=inflammation_analysis"
+addopts = "--cov-report=term-missing --cov=inflammation"
 testpaths = ["tests"]
 pythonpath = ["."]
+
+[build-system]
+requires = ["uv_build>=0.11.1,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "inflammation"
+module-root = ""
+
+[project.scripts]
+inflammation = "inflammation.controller:cli"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
